@@ -1,0 +1,43 @@
+# Editors.
+*.sw*
+.vscode
+.DS_Store
+.idea
+.uuid
+*.pdf
+*.csv
+*.png
+*.tar.gz
+cmake-build-debug
+
+# Build directory.
+build/
+out/
+cloud_pcache/
+
+test/devops100000.txt
+memory_usage*
+
+db/DB.pb.h
+db/DB.pb.cc
+# Autotools generated files.
+autom4te.cache/
+config.log
+config.status
+config.h
+config.h.in~
+configure~
+*~
+
+# Masstree autotools generated (keep source .hh/.cc/.h)
+third_party/masstree_wrapper/masstree/GNUmakefile
+third_party/masstree_wrapper/masstree/autom4te.cache/
+third_party/masstree_wrapper/masstree/config.h
+third_party/masstree_wrapper/masstree/config.h.in
+third_party/masstree_wrapper/masstree/config.log
+third_party/masstree_wrapper/masstree/config.status
+third_party/masstree_wrapper/masstree/*~
+third_party/masstree_wrapper/masstree/configure
+.cache/
+PromTCS.pdf
+GDB.txt

@@ -1,0 +1,2 @@
+add_subdirectory(thmap_test)
+add_subdirectory(atomic_queue_test)
