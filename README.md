@@ -25,7 +25,7 @@
 gunzip -c promtcs-ae-fast27.tar.gz | docker load
 
 mkdir -p /tmp/promtcs-data
-docker run -it --init --rm -v /tmp/promtcs-data:/data promtcs-ae
+docker run -it --init --rm -p 9966:9966 -v /tmp/promtcs-data:/data promtcs-ae
 # Now inside the container at /opt/PromTCS/build/.
 # Run: ./PromTCS_test 4 100000 30 30
 ```

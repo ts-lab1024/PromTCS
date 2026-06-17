@@ -8,6 +8,7 @@
 *.csv
 *.png
 *.tar.gz
+*.txt
 cmake-build-debug
 
 # Build directory.

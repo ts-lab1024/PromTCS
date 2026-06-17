@@ -1,7 +1,12 @@
 #include "db/TreeRemoteDB.h"
 
+#include <yaml-cpp/yaml.h>
+
+#include <boost/filesystem.hpp>
 #include <boost/move/detail/meta_utils.hpp>
 
+#include "TreeSeries/config.h"
+#include "leveldb/db/dbformat.h"
 #include "label/EqualMatcher.hpp"
 
 namespace tsdb {
@@ -49,22 +54,28 @@ namespace tsdb {
 
         leveldb::Status TreeRemoteDB::setup(const std::string& dbpath, const std::string& log_path) {
             //=================TreeSeries==========
-//                std::string  path = "/mnt/nvme/tree_series/tree_series_test";
-//                int fd = ::open(path.c_str(), O_WRONLY | O_CREAT, 0644);
-//                slab::Setting *setting = new slab::Setting();
-//                setting->ssd_device_ = "/mnt/nvme/tree_series/tree_series_test";
-//                std::string info_path = "/mnt/nvme/tree_series/tree_series_info_test";
-//                int info_fd = ::open(info_path.c_str(), O_WRONLY | O_CREAT, 0644);
-//                setting->ssd_slab_info_ = "/mnt/nvme/tree_series/tree_series_info_test";
-//                tree_series_ = new slab::TreeSeries(*setting);
+            YAML::Node cfg = YAML::LoadFile("../config.yaml");
 
-            std::string  path = "/home/dell/project/SSD/tree_series_test";
-            int fd = ::open(path.c_str(), O_WRONLY | O_CREAT, 0644);
+            config::tree_series_thread_pool_size = cfg["tree_series_thread_pool_size"].as<int>();
+            config::max_slab_memory = cfg["max_slab_memory"].as<int>();
+            config::read_buffer_size = cfg["read_buffer_size"].as<int>();
+            config::max_series_num = cfg["max_series_num"].as<int>();
+            config::slab_item_size = cfg["slab_item_size"].as<int>();
+            config::chunk_size = cfg["chunk_size"].as<int>();
+            config::slab_size = cfg["slab_size"].as<int>();
+
+            std::string tree_series_path = cfg["tree_series_path"].as<std::string>();
+            int fd = ::open(tree_series_path.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if (fd >= 0) {
+                ftruncate(fd, static_cast<off_t>(config::max_slab_memory) * 1024 * 1024 * 1024);
+                close(fd);
+            }
             slab::Setting *setting = new slab::Setting();
-            setting->ssd_device_ = "/home/dell/project/SSD/tree_series_test";
-            std::string info_path = "/home/dell/project/SSD/tree_series_info_test";
-            int info_fd = ::open(info_path.c_str(), O_WRONLY | O_CREAT, 0644);
-            setting->ssd_slab_info_ = "/home/dell/project/SSD/tree_series_info_test";
+            setting->ssd_device_ = tree_series_path.data();
+            std::string info_path = cfg["tree_series_info_path"].as<std::string>();
+            int info_fd = ::open(info_path.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if (info_fd >= 0) close(info_fd);
+            setting->ssd_slab_info_ = info_path.data();
             tree_series_ = new slab::TreeSeries(*setting);
 
             //==========LevelDB============

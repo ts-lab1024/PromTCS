@@ -1,5 +1,9 @@
 #define GLOBAL_VALUE_DEFINE
 
+#include <iostream>
+#include <yaml-cpp/yaml.h>
+#include <boost/filesystem.hpp>
+
 #include "protobuf/types.pb.h"
 #include "protobuf/remote.pb.h"
 #include <snappy.h>
@@ -8,8 +12,9 @@
 #include "db/DB.hpp"
 
 int main(int argc, char** argv) {
-  std::string dbpath = "/tmp/tsdb_big";
-  std::string log_path = "/tmp/tsdb_log";
+  YAML::Node cfg = YAML::LoadFile("../config.yaml");
+  std::string dbpath = cfg["db_path"].as<std::string>();
+  std::string log_path = cfg["log_path"].as<std::string>();
   boost::filesystem::remove_all(dbpath);
   boost::filesystem::remove_all(log_path);
 

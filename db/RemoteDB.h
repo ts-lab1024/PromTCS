@@ -13,7 +13,7 @@
 namespace tsdb {
     namespace db {
 
-#define prom_host "192.168.1.102"
+#define prom_host "0.0.0.0"
 #define prom_port 9966
 
         class RemoteDB {

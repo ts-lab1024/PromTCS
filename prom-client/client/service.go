@@ -74,7 +74,10 @@ func runQueryWorkers(cli *Client, requestBody []byte, qryCnt, threads int) ([]fl
 				request, _ := http.NewRequest(http.MethodPost, RemoteQueryServer, bytes.NewBuffer(requestBody))
 
 				now := time.Now()
-				response, _ := cli.Client.Do(request)
+				response, err := cli.Client.Do(request)
+				if err != nil || response == nil {
+					continue
+				}
 				body, _ := io.ReadAll(response.Body)
 				response.Body.Close()
 				lag := time.Since(now).Nanoseconds()
@@ -597,7 +600,10 @@ func Query(numSamples, numSeries int) {
 
 				now := time.Now()
 
-				response, _ := cli.Client.Do(request)
+				response, err := cli.Client.Do(request)
+				if err != nil || response == nil {
+					continue
+				}
 				defer response.Body.Close()
 
 				body, _ := io.ReadAll(response.Body)
@@ -622,7 +628,10 @@ func Query(numSamples, numSeries int) {
 
 			now := time.Now()
 
-			response, _ := cli.Client.Do(request)
+			response, err := cli.Client.Do(request)
+			if err != nil || response == nil {
+				continue
+			}
 			defer response.Body.Close()
 
 			body, _ := io.ReadAll(response.Body)
