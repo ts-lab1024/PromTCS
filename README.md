@@ -17,6 +17,23 @@
 
 ## Quick Test — Storage Engine
 
+
+### Configuration
+
+For builds, edit `config.yaml` to set storage paths:
+
+```yaml
+# LSM-tree storage (HDD)
+db_path:  /path/to/data/promtcs_db/
+
+# log (SSD)
+log_path: /path/to/data/promtcs_log
+
+# TreeSeries (SSD)
+tree_series_path: /path/to/ssd/tree_series
+tree_series_info_path: /path/to/ssd/tree_series_info
+```
+
 ### Build & Run
 
 **Docker (Recommended):**
@@ -54,23 +71,6 @@ Parameters: 4 threads, 100,000 time series, 30-second interval, 30 data tuples p
 
 You should see insertion throughput statistics, memory usage (VM/RSS), and query latency for 8 query patterns.
 
-### Configuration
-
-For native builds, edit `config.yaml` to set storage paths:
-
-```yaml
-# LSM-tree storage (LevelDB)
-db_path:  /path/to/data/promtcs_db/
-log_path: /path/to/data/promtcs_log
-
-# SSD slab storage (TreeSeries)
-tree_series_path: /path/to/ssd/tree_series
-tree_series_info_path: /path/to/ssd/tree_series_info
-max_slab_memory: 8          # GB
-```
-
-> The Docker image auto-generates `config.yaml` with all paths under `/data/`.
-> Mount a single host directory to `/data` and all files are auto-created.
 
 ## End-to-End Test — Remote Storage Service
 
