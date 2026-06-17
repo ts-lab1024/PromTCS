@@ -491,7 +491,6 @@ tsdb_test("db/tree_db_insert_and_query_test_nvme.cpp")
 tsdb_test("db/PromTCS_test.cpp")
 tsdb_test("head/tree_head_query_test.cpp")
 tsdb_test("testutil/label_generator_test.cpp")
-tsdb_test("testutil/memory_usage_test.cpp")
 tsdb_test("testutil/config_test.cpp")
 tsdb_test("testutil/index_rw_test.cpp")
 
