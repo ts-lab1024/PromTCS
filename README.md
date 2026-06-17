@@ -22,6 +22,12 @@
 **Docker (Recommended):**
 
 ```bash
+# Via browser
+# Visit https://zenodo.org/records/20728578 and download promtcs-ae-fast27.tar.gz
+
+# Via command line
+wget https://zenodo.org/records/20728578/files/promtcs-ae-fast27.tar.gz
+
 gunzip -c promtcs-ae-fast27.tar.gz | docker load
 
 mkdir -p /tmp/promtcs-data
