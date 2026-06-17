@@ -17,7 +17,6 @@ out/
 cloud_pcache/
 
 test/devops100000.txt
-memory_usage*
 
 db/DB.pb.h
 db/DB.pb.cc
